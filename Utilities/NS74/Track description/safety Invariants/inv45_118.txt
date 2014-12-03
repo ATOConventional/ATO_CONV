@@ -1,0 +1,583 @@
+(* ************************************************** *)
+(*             METRO De SANTIAGO Ligne 5              *)
+(*             Secteur Sacem nr. 45                   *)
+(* ************************************************** *)
+(* Fichier Invariants établi le : 27/10/2009 10:42:46 *)
+(* Auteur: PA                                         *)
+(* Version: 100                                       *)
+(* ************************************************** *)
+(* Fichier Invariants etabli le : 25/01/10            *)
+(* Auteur: PA                                         *)
+(* Version: 101                                       *)
+(* Modification points d'arret Rfix déplacé apres Exch*)
+(* Modification segment 45.5.0   AM165722             *)
+(* Modification entete 45.5.0 pente = -4,8 AM165727   *)
+(* Modification points d'arret pasi 22b déplacé au pk *)
+(* Modification 14742,5 AM165722                      *)
+(* Modification EXCH Nb variants = 2 AM165729         *)
+(* ************************************************** *)
+(*---------------------------------------------------------------------------*)
+(* version 102                                                               *)
+(* Date : 04/10/2010, Auteur : M. Plywacz                                    *)
+(*                                     origine : correction pk suite mesures *)
+(*                                                                           *)
+(*---------------------------------------------------------------------------*)
+(* version 103                                                               *)
+(* Date : 12/10/2010, Auteur : M. Plywacz                                    *)
+(*                                     origine : inversion numeros  segments *)
+(* segment 45.1.1 : devient  : 42.1.0                                        *)
+(* segment 45.1.0 : devient  : 42.1.1                                        *)
+(*---------------------------------------------------------------------------*)
+(* version 104                                                               *)
+(* Date : 18/10/2010, Auteur : Ph. Hog                                       *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.2.0 : ENTETE (pour BR)  passe du pk   12707,0 au pk   12706,5  *)
+(* segment 45.2.0 : BALISE init       passe du pk   12732,0 au pk   12732,5  *)
+(* segment 45.2.0 : BALISE            passe du pk   12961,0 au pk   12962,0  *)
+(* segment 45.2.0 : BALISE            passe du pk   12203,0 au pk   12203,5  *)
+(* segment 45.2.1 : BALISE            passe du pk   14400,0 au pk   14399,5  *)
+(*---------------------------------------------------------------------------*)
+(* version 105                                                               *)
+(* Date : 19/10/2010, Auteur : M. Plywacz                                    *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.2.1 : ARRETSIMPLE       passe du pk   14511.5 au pk   14510    *)
+(* segment 45.5.0 : ENTETESEG         passe du pk   14561.5 au pk   14559.5  *)
+(* segment 45.5.0 : BALISE            passe du pk   14642.5 au pk   14645.5  *)
+(*---------------------------------------------------------------------------*)
+(* version 106                                                               *)
+(* Date : 21/10/2010, Auteur : M. Plywacz                                    *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.3.0 : BALISE            passe du pk  -14255.0 au pk  -14255.5  *)
+(* segment 45.3.0 : BALISE            passe du pk  -14025.0 au pk  -14026    *)
+(* segment 45.3.0 : BALISE            passe du pk  -13795.0 au pk  -13796    *)
+(* segment 45.3.0 : BALISE            passe du pk  -13530.5 au pk  -13796    *)
+(* segment 45.3.0 : EXTREMSIMPLE      passe du pk  -13317.5 au pk  -13318.5  *)
+(* segment 45.2.0 : ARRETSUB 22       passe du pk   13127.5 au pk   13125    *)
+(* segment 45.2.0 : ARRETSUB 21       passe du pk   13332   au pk   13327.5  *)
+(* segment 45.2.0 : ARRETSUB 09       passe du pk   13545   au pk   13541    *)
+(* segment 45.2.0 : ARRETSUB 10       passe du pk   14045   au pk   14042    *)
+(*---------------------------------------------------------------------------*)
+(* version 107                                                               *)
+(* Date : 21/10/2010, Auteur : M. Plywacz                                    *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.5.0 : ENTETESEG         passe du pk   14559.5 au pk   14560    *)
+(*---------------------------------------------------------------------------*)
+(* version 108                                                               *)
+(* Date : 26/10/2010, Auteur : M. Plywacz                                    *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.5.0 :RETOURN  absc br invers passe de   186.5  a       187.5   *)
+(* segment 45.1.1 : ARRETSIMPLE 22a   passe du pk  -14599   au pk   -14600.5 *)
+(* segment 45.3.0 : ARRETSUB 19       passe du pk  -14139.5 au pk   -14140.5 *)
+(* segment 45.3.0 : ARRETSUB 11       passe du pk  -13735.0 au pk   -13736.0 *)
+(* segment 45.3.0 : ARRETSUB 12       passe du pk  -13332.5 au pk   -13333.5 *)
+(*---------------------------------------------------------------------------*)
+(* version 109                                                               *)
+(* Date : 29/10/2010, Auteur : M. Plywacz                                    *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.5.0 :RETOURN  absc br invers passe de   187.5  a        188.0  *)
+(* segment 45.2.1 :ENTETESEG          passe du pk   13560.0 au pk   13560.5  *)
+(* segment 45.2.1 : BALISE            passe du pk   13682.5 au pk   13683.0  *)
+(*---------------------------------------------------------------------------*)
+(* version 110                                                               *)
+(* Date : 05/11/2010, Auteur : Ph. Hog                                       *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.2.1 : ArretSub cdv 10   passe du pk   14042,0 au pk   14041,0  *)
+(* segment 45.2.1 : Divergence 11     passe du pk   14541,5 au pk   14540,5  *)
+(* segment 45.5.0 : Retour            passe du pk   14599,0 au pk   14504,0  *)
+(* segment 45.5.0 : Station           passe du pk   14602,5 au pk   14604,0  *)
+(*---------------------------------------------------------------------------*)
+(* Date : 08/11/2010, Auteur : Ph. Hog                                       *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.4.0 : Balise reloc      passe du pk   14645,0 au pk   14646,5  *)
+(* segment 45.4.1 : Balise reloc      passe du pk   14849,0 au pk   14848,5  *)
+(* segment 45.4.1 : Signal RFixe      passe du pk   14914,0 au pk   14913,0  *)
+(*---------------------------------------------------------------------------*)
+(* Date : 09/11/2010, Auteur : Ph. Hog                                       *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.1.0 : Extrem chainee chaine sur le segment 45.1.1 barnche 1    *)
+(*---------------------------------------------------------------------------*)
+(* Date : 10/11/2010, Auteur : Ph. Hog                                       *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.1.0 : Extrem chainee       passe du pk -14785,5 au pk -14789,0 *)
+(* segment 45.1.1 : ArretSpe Sig 23      passe du pk -14746,5 au pk -14747,5 *)
+(* segment 45.4.1 : Retournement abscisse inverse  passe de 123,5 a 122,5    *)
+(*---------------------------------------------------------------------------*)
+(* Date : 15/11/2010, Auteur : Ph. Hog                                       *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.1.0 : ArretSimple 14A      passe du pk -14814,0 au pk -14815,0 *)
+(* segment 45.1.0 : Extrem chainee       passe du pk -14789,0 au pk -14788,0 *)
+(* segment 45.4.1 : Retourn              passe du pk  14814,0 au pk  14815,0 *)
+(*                  ArretFonc3 ajouté au pk 14818,0                          *)
+(*---------------------------------------------------------------------------*)
+(* version 115                                                               *)
+(* Date : 11/03/2011, Auteur : M. Plywacz                                    *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.2.1 : TIVCOM            passe du pk   14511.5 au pk   14536.0  *)
+(*---------------------------------------------------------------------------*)
+(* version 116                                                               *)
+(* Date : 25/05/2011, Auteur : I. ISSA                                       *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.2.1 : TIVFIXE            passe du pk   14462.5 au pk   14446.5 *)
+(*---------------------------------------------------------------------------*)
+(* version 117                                                               *)
+(* Date : 27/05/2011, Auteur : I. ISSA                                       *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.2.1 : TIVFIXE            passe du pk   14462.5 au pk   14422.5 *)
+(*---------------------------------------------------------------------------*)
+(* version 118                                                               *)
+(* Date : 07/01/2013, Auteur : X. RABY                                       *)
+(*                                     origine : correction pk suite essais  *)
+(* segment 45.1.0 :                                                          *)
+(*         ENTETESEG au pk -14937.5 devient ARRETFONC1 au pk -14977.5        *)
+(* segment 45.1.1 :                                                          *)
+(*         ARRETFONC2 au pk -14629.5 devient ARRETFONC1 au pk -14606         *)
+(* segment 45.2.0 :                                                          *)
+(*         ARRETFONC2 au pk 13272.5 devient ARRETFONC1 au pk 13295           *)
+(* segment 45.3.1 :                                                          *)
+(*         ARRETFONC2 au pk -13187 devient ARRETFONC1 au pk -13164           *)
+(* segment 45.4.0 :                                                          *)
+(*         ARRETFONC2 au pk 14714.5 devient ARRETFONC1 au pk 14738.5         *)
+(* segment 45.4.1 :                                                          *)
+(*         RETOURN abscisse sur branche inverse passe 122.5 a 162.5          *)
+(*                 longueur zone retournement passe de de 98 a 137           *)
+(*         ARRETSIMPLE au pk 14913 devient ARRETFONC1 au pk 14952            *)
+(*         EXTREMSIMPLE au pk 14937 passe au pk 14977                        *)
+(* segment 45.5.0 :                                                          *)
+(*         ARRETFONC3 chainage abscisse passe de 23.5 a 0                    *)
+(*---------------------------------------------------------------------------*)
+
+(* --------------------- SEGMENT 45.1.0 --------------------- *)
+
+ENTETESEG        -14977.5  (* abscisse _Bloc nr. 1 *)
+                 2884      (* numero de segment *)
+                 13        (* numero de canal *)
+                 1         (* numero d'index *)
+                 0         (* rang du premier variant *)
+                 1100      (* caracteristiques fixes *)
+                 5         (* vitesse limite 25km/h *)
+                 0         (* pente reelle *)
+                 3.2       (* pente compensee *)
+
+BALISE           -14849    (* abscisse _Bloc nr. 2 *)
+                 4         (* relocalisation : code 2 *)
+
+ARRETSIMPLE      -14815    (* abscisse pour signal 14A _Bloc nr. 3 *)
+                 0010      (* Avec section Tampon *)
+
+EXTREMCHAINEE    -14788    (* abscisse _Bloc nr. 4 *)
+                 2885      (* prochain segment 45.1.1 *)
+                 1         (* numero de branche sur prochain segment *)
+                 0         (* rang premier variant anticipee *)
+                 0         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 45.1.1 --------------------- *)
+
+ENTETESEG        -14926    (* abscisse _Bloc nr. 5 *)
+                 2885      (* numero de segment *)
+                 13        (* numero de canal *)
+                 1         (* numero d'index *)
+                 2         (* rang du premier variant *)
+                 1100      (* caracteristiques fixes *)
+                 5         (* vitesse limite 25km/h *)
+                 0         (* pente reelle *)
+                 3.2       (* pente compensee *)
+
+CONVERGENCE      -14785.5  (* abscisse convergence  23 _Bloc nr. 6 *)
+
+ARRETSPECIFIC    -14747.5  (* abscisse pour P. Arr. 23 _Bloc nr. 7 *)
+                 0010      (* Avec section Tampon *)
+
+STATION          -14739    (* abscisse _Bloc nr. 8 *)
+                 135       (* longueur quai *)
+                 0100      (* quai a d *)
+                 92        (* numero station Plaza de Maipu *)
+
+RETOURN          -14739    (* abscisse _Bloc nr. 9 *)
+                 2900      (* Numero de segment inverse 45.5.0 *)
+                 0         (* Numero de branche sur segment inverse *)
+                 179       (* abscisse sur branche inverse *)
+                 138       (* longueur zone retournement *)
+
+TIVFIXE          -14739    (* abscisse _Bloc nr. 10 *)
+                 16        (* vitesse tabulee = 80km/h *)
+
+BALISE           -14706    (* abscisse _Bloc nr. 11 *)
+                 7         (* init *)
+
+ARRETFONC1       -14606    (* abscisse  _Bloc nr. 12 *)
+
+ARRETSIMPLE      -14600.5  (* abscisse pour signal 22A _Bloc nr. 13 *)
+                 0010      (* Avec section Tampon *)
+
+EXTREMSIMPLE     -14510    (* abscisse _Bloc nr. 14 *)
+                 7         (* increment de seg --> vers 2892 - 45.3.0 *)
+                 0         (* rang premier variant anticipee *)
+                 3         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 45.3.0 --------------------- *)
+
+ENTETESEG        -14510    (* abscisse _Bloc nr. 15 *)
+                 2892      (* numero de segment *)
+                 13        (* numero de canal *)
+                 1         (* numero d'index *)
+                 0         (* rang du premier variant *)
+                 1100      (* caracteristiques fixes *)
+                 16        (* vitesse limite 80km/h *)
+                 0         (* pente reelle *)
+                 3.2       (* pente compensee *)
+
+BALISE           -14485    (* abscisse _Bloc nr. 16 *)
+                 2         (* relocalisation : code 1 *)
+
+PENTECOMP        -14278    (* abscisse _Bloc nr. 17 *)
+                 11.4      (* pente compensee *)
+
+BALISE           -14255.5  (* abscisse _Bloc nr. 18 *)
+                 2         (* relocalisation : code 1 *)
+
+PENTECOMP        -14198    (* abscisse _Bloc nr. 19 *)
+                 12.7      (* pente compensee *)
+
+ARRETSUB         -14140.5  (* abscisse pour cdv 19 _Bloc nr. 20 *)
+
+BALISE           -14026    (* abscisse _Bloc nr. 21 *)
+                 2         (* relocalisation : code 1 *)
+
+PENTECOMP        -13988    (* abscisse _Bloc nr. 22 *)
+                 -2.2      (* pente compensee *)
+
+PENTECOMP        -13948    (* abscisse _Bloc nr. 23 *)
+                 -14.7     (* pente compensee *)
+
+PENTECOMP        -13888    (* abscisse _Bloc nr. 24 *)
+                 -16.5     (* pente compensee *)
+
+BALISE           -13796    (* abscisse _Bloc nr. 25 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSUB         -13736    (* abscisse pour cdv 11 _Bloc nr. 26 *)
+
+BALISE           -13531.5  (* abscisse _Bloc nr. 27 *)
+                 2         (* relocalisation : code 1 *)
+
+PENTECOMP        -13398    (* abscisse _Bloc nr. 28 *)
+                 -6.6      (* pente compensee *)
+
+ARRETSUB         -13333.5  (* abscisse pour cdv 12 _Bloc nr. 29 *)
+
+PENTECOMP        -13328    (* abscisse _Bloc nr. 30 *)
+                 -2.5      (* pente compensee *)
+
+EXTREMSIMPLE     -13318.5  (* abscisse _Bloc nr. 31 *)
+                 1         (* increment de seg --> vers 2893 - 45.3.1 *)
+                 0         (* rang premier variant anticipee *)
+                 0         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 45.3.1 --------------------- *)
+
+ENTETESEG        -13317.5  (* abscisse _Bloc nr. 32 *)
+                 2893      (* numero de segment *)
+                 13        (* numero de canal *)
+                 1         (* numero d'index *)
+                 3         (* rang du premier variant *)
+                 1100      (* caracteristiques fixes *)
+                 16        (* vitesse limite 80km/h *)
+                 0         (* pente reelle *)
+                 -2.5      (* pente compensee *)
+
+STATION          -13297    (* abscisse _Bloc nr. 33 *)
+                 135       (* longueur quai *)
+                 0100      (* quai a d *)
+                 91        (* numero station Sant Bueras *)
+
+BALISE           -13258    (* abscisse _Bloc nr. 34 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETFONC1       -13164    (* abscisse  _Bloc nr. 35 *)
+
+ARRETSUB         -13140    (* abscisse pour cdv 13 _Bloc nr. 36 *)
+
+PENTECOMP        -13068    (* abscisse _Bloc nr. 37 *)
+                 5.1       (* pente compensee *)
+
+BALISE           -13052.5  (* abscisse _Bloc nr. 38 *)
+                 2         (* relocalisation : code 1 *)
+
+PENTECOMP        -12998    (* abscisse _Bloc nr. 39 *)
+                 11        (* pente compensee *)
+
+PENTECOMP        -12878    (* abscisse _Bloc nr. 40 *)
+                 11.3      (* pente compensee *)
+
+ARRETSUB         -12815    (* abscisse pour cdv 11 _Bloc nr. 41 *)
+
+EXTREMCHAINEE    -12800    (* abscisse _Bloc nr. 42 *)
+                 2820      (* prochain segment 44.1.0 *)
+                 0         (* numero de branche sur prochain segment *)
+                 0         (* rang premier variant anticipee *)
+                 2         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 45.2.0 --------------------- *)
+
+ENTETESEG        12706.5   (* abscisse _Bloc nr. 43 *)
+                 2888      (* numero de segment *)
+                 12        (* numero de canal *)
+                 1         (* numero d'index *)
+                 0         (* rang du premier variant *)
+                 1100      (* caracteristiques fixes *)
+                 16        (* vitesse limite 80km/h *)
+                 0         (* pente reelle *)
+                 -11.6     (* pente compensee *)
+
+PENTECOMP        12712     (* abscisse _Bloc nr. 44 *)
+                 -11.2     (* pente compensee *)
+
+BALISE           12732.5   (* abscisse _Bloc nr. 45 *)
+                 7         (* init *)
+
+BALISE           12962     (* abscisse _Bloc nr. 46 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSUB         13125     (* abscisse pour cdv 22 _Bloc nr. 47 *)
+
+STATION          13162     (* abscisse _Bloc nr. 48 *)
+                 135       (* longueur quai *)
+                 0100      (* quai a d *)
+                 91        (* numero station Sant Bueras *)
+
+PENTECOMP        13182     (* abscisse _Bloc nr. 49 *)
+                 -2.4      (* pente compensee *)
+
+BALISE           13203.5   (* abscisse _Bloc nr. 50 *)
+                 2         (* relocalisation : code 1 *)
+
+PENTECOMP        13252     (* abscisse _Bloc nr. 51 *)
+                 2.7       (* pente compensee *)
+
+ARRETFONC1       13295     (* abscisse  _Bloc nr. 52 *)
+
+ARRETSUB         13327.5   (* abscisse pour cdv 21 _Bloc nr. 53 *)
+
+PENTECOMP        13402     (* abscisse _Bloc nr. 54 *)
+                 4.5       (* pente compensee *)
+
+BALISE           13443     (* abscisse _Bloc nr. 55 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSUB         13541     (* abscisse pour cdv 9 _Bloc nr. 56 *)
+
+PENTECOMP        13552     (* abscisse _Bloc nr. 57 *)
+                 13.5      (* pente compensee *)
+
+EXTREMSIMPLE     13560     (* abscisse _Bloc nr. 58 *)
+                 1         (* increment de seg --> vers 2889 - 45.2.1 *)
+                 0         (* rang premier variant anticipee *)
+                 0         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 45.2.1 --------------------- *)
+
+ENTETESEG        13560.5   (* abscisse _Bloc nr. 59 *)
+                 2889      (* numero de segment *)
+                 12        (* numero de canal *)
+                 1         (* numero d'index *)
+                 3         (* rang du premier variant *)
+                 1100      (* caracteristiques fixes *)
+                 16        (* vitesse limite 80km/h *)
+                 0         (* pente reelle *)
+                 13.5      (* pente compensee *)
+
+PENTECOMP        13622     (* abscisse _Bloc nr. 60 *)
+                 16.3      (* pente compensee *)
+
+BALISE           13683     (* abscisse _Bloc nr. 61 *)
+                 2         (* relocalisation : code 1 *)
+
+BALISE           13922.5   (* abscisse _Bloc nr. 62 *)
+                 2         (* relocalisation : code 1 *)
+
+PENTECOMP        14032     (* abscisse _Bloc nr. 63 *)
+                 -1.8      (* pente compensee *)
+
+ARRETSUB         14041     (* abscisse pour cdv 10 _Bloc nr. 64 *)
+
+PENTECOMP        14072     (* abscisse _Bloc nr. 65 *)
+                 -12.3     (* pente compensee *)
+
+PENTECOMP        14142     (* abscisse _Bloc nr. 66 *)
+                 -12.8     (* pente compensee *)
+
+BALISE           14162     (* abscisse _Bloc nr. 67 *)
+                 2         (* relocalisation : code 1 *)
+
+BALISE           14399.5   (* abscisse _Bloc nr. 68 *)
+                 2         (* relocalisation : code 1 *)
+
+TIVFIXE          14422.5   (* abscisse _Bloc nr. 69 *)
+                 8         (* vitesse tabulee = 40km/h *)
+
+PENTECOMP        14442     (* abscisse _Bloc nr. 70 *)
+                 -4.8      (* pente compensee *)
+
+ARRETSIMPLE      14510     (* abscisse pour signal 10 _Bloc nr. 71 *)
+                 0000      (* Sans section Tampon *)
+
+TIVCOM           14536     (* abscisse _Bloc nr. 72 *)
+                 5         (* vitesse tabulee = 25km/h *)
+
+DIVERGENCE       14540.5   (* abscisse divergence 11 _Bloc nr. 73 *)
+                 0         (* reserve *)
+                 2         (* branche normale *)
+
+CHCANAL          14561.5   (* abscisse _Bloc nr. 74 *)
+                 13        (* nr. canal pour freq. 35khz *)
+
+EXTREMSIMPLE     14561.5   (* abscisse _Bloc nr. 75 *)
+                 11        (* increment de seg --> vers 2900 - 45.5.0 *)
+                 2         (* rang premier variant anticipee *)
+                 2         (* nombre de variants anticipees *)
+
+EXTREMSIMPLE     14598.5   (* abscisse _Bloc nr. 76 *)
+                 7         (* increment de seg --> vers 2896 - 45.4.0 *)
+                 2         (* rang premier variant anticipee *)
+                 5         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 45.4.0 --------------------- *)
+
+ENTETESEG        14598.5   (* abscisse _Bloc nr. 77 *)
+                 2896      (* numero de segment *)
+                 12        (* numero de canal *)
+                 1         (* numero d'index *)
+                 0         (* rang du premier variant *)
+                 1100      (* caracteristiques fixes *)
+                 8         (* vitesse limite 40km/h *)
+                 0         (* pente reelle *)
+                 -4.8      (* pente compensee *)
+
+ARRETSPECIFIC    14598.5   (* abscisse pour P. Arr. 12 _Bloc nr. 78 *)
+                 0010      (* Avec section Tampon *)
+
+STATION          14605.5   (* abscisse _Bloc nr. 79 *)
+                 135       (* longueur quai *)
+                 0100      (* quai a d *)
+                 92        (* numero station Plaza de Maipu *)
+
+BALISE           14646.5   (* abscisse _Bloc nr. 80 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETFONC1       14738.5   (* abscisse  _Bloc nr. 81 *)
+
+ARRETSIMPLE      14744     (* abscisse pour signal 12 _Bloc nr. 82 *)
+                 0010      (* Avec section Tampon *)
+
+TIVFIXE          14744     (* abscisse _Bloc nr. 83 *)
+                 6         (* vitesse tabulee = 30km/h *)
+
+CONVERGENCE      14785.5   (* abscisse convergence  13 _Bloc nr. 84 *)
+
+EXTREMSIMPLE     14810     (* abscisse _Bloc nr. 85 *)
+                 1         (* increment de seg --> vers 2897 - 45.4.1 *)
+                 0         (* rang premier variant anticipee *)
+                 0         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 45.4.1 --------------------- *)
+
+ENTETESEG        14810     (* abscisse _Bloc nr. 86 *)
+                 2897      (* numero de segment *)
+                 12        (* numero de canal *)
+                 1         (* numero d'index *)
+                 3         (* rang du premier variant *)
+                 1100      (* caracteristiques fixes *)
+                 6         (* vitesse limite 30km/h *)
+                 0         (* pente reelle *)
+                 -4.8      (* pente compensee *)
+
+RETOURN          14815     (* abscisse _Bloc nr. 87 *)
+                 2884      (* Numero de segment inverse 45.1.0 *)
+                 0         (* Numero de branche sur segment inverse *)
+                 162.5     (* abscisse sur branche inverse *)
+                 137       (* longueur zone retournement *)
+
+ARRETFONC3       14818     (* abscisse  _Bloc nr. 88 *)
+                 50        (* longueur min train: 1er arret *)
+                 0.0       (* chainage abscisse --> 2eme arret *)
+                 50        (* longueur min train: 2eme arret *)
+                 0.0       (* chainage abscisse --> 2eme arret *)
+
+BALISE           14848.5   (* abscisse _Bloc nr. 89 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSIMPLE      14952     (* abscisse pour signal Rfix _Bloc nr. 90 *)
+                 0010      (* Avec section Tampon *)
+
+EXTREMSIMPLE     14977     (* abscisse _Bloc nr. 91 *)
+                 0         (* increment de seg ---> sortie *)
+                 0         (* rang premier variant anticipee *)
+                 0         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 45.5.0 --------------------- *)
+
+ENTETESEG        14560     (* abscisse _Bloc nr. 92 *)
+                 2900      (* numero de segment *)
+                 15        (* numero de canal *)
+                 1         (* numero d'index *)
+                 0         (* rang du premier variant *)
+                 1100      (* caracteristiques fixes *)
+                 5         (* vitesse limite 25km/h *)
+                 0         (* pente reelle *)
+                 -4.8      (* pente compensee *)
+
+RETOURN          14604     (* abscisse _Bloc nr. 93 *)
+                 2885      (* Numero de segment inverse 45.1.1 *)
+                 1         (* Numero de branche sur segment inverse *)
+                 183       (* abscisse sur branche inverse *)
+                 137       (* longueur zone retournement *)
+
+STATION          14604     (* abscisse _Bloc nr. 94 *)
+                 135       (* longueur quai *)
+                 1000      (* quai a g *)
+                 92        (* numero station Plaza de Maipu *)
+
+ARRETFONC3       14606     (* abscisse  _Bloc nr. 95 *)
+                 106       (* longueur min train: 1er arret *)
+                 0         (* chainage abscisse --> 2eme arret *)
+                 50        (* longueur min train: 2eme arret *)
+                 0         (* chainage abscisse --> 2eme arret *)
+
+BALISE           14645.5   (* abscisse _Bloc nr. 96 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSIMPLE      14741     (* abscisse pour signal 22B _Bloc nr. 97 *)
+                 0010      (* Avec section Tampon *)
+
+DIVERGENCE       14765.5   (* abscisse divergence 23 _Bloc nr. 98 *)
+                 0         (* reserve *)
+                 2         (* branche normale *)
+
+CHCANAL          14785.5   (* abscisse _Bloc nr. 99 *)
+                 12        (* nr. canal pour freq. 30khz *)
+
+EXTREMCHAINEE    14785.5   (* abscisse _Bloc nr. 100 *)
+                 2896      (* prochain segment 45.4.0 *)
+                 1         (* numero de branche sur prochain segment *)
+                 0         (* rang premier variant anticipee *)
+                 2         (* nombre de variants anticipees *)
+
+ARRETSIMPLE      14810     (* abscisse pour signal Rfix _Bloc nr. 101 *)
+                 0010      (* Avec section Tampon *)
+
+EXTREMSIMPLE     14830.5   (* abscisse _Bloc nr. 102 *)
+                 0         (* increment de seg ---> sortie *)
+                 0         (* rang premier variant anticipee *)
+                 0         (* nombre de variants anticipees *)
+
+FIN-INVARIANTS
+(* Fichier d'entree : rts_mai45_118.xls *)
+(* Fichier de sortie : inv45_118.txt *)

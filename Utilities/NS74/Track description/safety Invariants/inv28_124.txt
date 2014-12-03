@@ -1,0 +1,556 @@
+(***********************************************)
+(*        LIGNE 1 du metro de Santiago         *)
+(*                 SECTEUR 28                  *)
+(***********************************************)
+(*  premiere version : 04.06.1997              *)
+(*  auteur           : M. Plywacz              *)
+(*  version          : 1.0.0                   *)
+(*  version conforme au FAX L1_L2_F163         *)
+(***********************************************)
+
+(*---------------------------------------------------------------------------*)
+(* Modifications :                                                           *)
+(* -------------                                                             *)
+(*  Version : 1.0.1                                                          *)
+(*  Date : 18/09/1997, Auteur : F. Chanier, Origine : dem. site fax F217/97  *)
+(*  seg 28.1.0 : la balise d'init passe de 9415.0 a 9423.0                   *)
+(*  seg 28.1.0 : la balise de reloc passe de 9871.5 a 9869                   *)
+(*  seg 28.3.0 : la balise de reloc passe de 10600 a 10588                   *)
+(*  seg 28.3.0 : la balise de reloc passe de 10850 a 10854                   *)
+(*  seg 28.4.0 : la balise d'init passe de -11470 a -11474                   *)
+(*  seg 28.4.0 : la balise de reloc passe de -11240 a -11233                 *)
+(*  seg 28.5.0 : la balise de reloc passe de -10550 a -10543                 *)
+(*  seg 28.6.0 : la balise de reloc passe de -10110 a -10127                 *)
+(*  seg 28.6.0 : la balise de reloc passe de -9850 a -9837                   *)
+(*                                                                           *)
+(*  Version : 1.0.2                                                          *)
+(*  Date : 22/09/1997, Auteur : P. HOG,     Origine : site (Fax L1L2-F220)   *)
+(*  segment 28.1.0 : La balise 2  passe du Pk   9595,0   au Pk   9594,5.     *)
+(*  segment 28.2.0 : L'Entete     passe du Pk   9954,5   au Pk   9952,0.     *)
+(*  segment 28.3.0 : La balise 1  passe du Pk  10588,0   au Pk  10586,5.     *)
+(*  segment 28.4.0 : L'Entete     passe du Pk -11497,0   au Pk -11496,0.     *)
+(*                   La balise 3  passe du Pk -11072,0   au Pk -11073,0.     *)
+(*  segment 28.5.0 : La balise 2  passe du Pk -10543,0   au Pk -10544,5.     *)
+(*                   La balise 3  passe du Pk -10376,0   au Pk -10378,0.     *)
+(*  segment 28.6.0 : L'Entete     passe du Pk -10138,5   au Pk -10137,5.     *)
+(*                   La balise 2  passe du Pk  -9837,0   au Pk  -9838,0.     *)
+(*  segment 28.6.1 : L'Entete     passe du Pk  -9692,5   au Pk  -9691,5.     *)
+(*                                                                           *)
+(*  Version : 1.0.3                                                          *)
+(*  Date : 24/09/1997, Auteur : P. HOG,     Origine : site (Fax L1L2-F226)   *)
+(*  segment 28.1.0 : CdvSAL12     passe du Pk   9527,5   au Pk   9528,0.     *)
+(*                   CdvSAL14     passe du Pk   9816,5   au Pk   9816,0.     *)
+(*                   Le nombre de variants anticipes passe de 1 a 2          *)
+(*  segment 28.2.0 : L'Entete     passe du Pk   9952,0   au Pk   9957,0.     *)
+(*                   Le nombre de variants anticipes passe de 1 a 2          *)
+(*  segment 28.3.0 : La balise 1  passe du Pk  10586,5   au Pk  10589,5.     *)
+(*                   CdvPDV13     passe du Pk  11108,0   au Pk  11107,5.     *)
+(*                   CdvPDV14     passe du Pk  11299,0   au Pk  11297,5.     *)
+(*                   Le nombre de variants anticipes passe de 1 a 2          *)
+(*  segment 28.4.0 : CdvPDV22     passe du Pk -11138,0   au Pk -11139,0.     *)
+(*                   CdvPDV21     passe du Pk -10993,0   au Pk -10994,0.     *)
+(*                   CdvPDV20     passe du Pk -10838,0   au Pk -10839,5.     *)
+(*                   Le nombre de variants anticipes passe de 1 a 2          *)
+(*  segment 28.5.0 : L'Entete     passe du Pk -10825,0   au Pk -10823,5.     *)
+(*                   CdvMON23     passe du Pk -10648,0   au Pk -10648,5.     *)
+(*                   CdvMON22     passe du Pk -10443,0   au Pk -10445,0.     *)
+(*                   CdvMON21     passe du Pk -10297,0   au Pk -10299,0.     *)
+(*                   CdvMON20     passe du Pk -10151,0   au Pk -10153,5.     *)
+(*                   Le nombre de variants anticipes passe de 1 a 2          *)
+(*  segment 28.6.0 : L'Entete     passe du Pk -10137,5   au Pk -10135,5.     *)
+(*                   CdvSAL23     passe du Pk  -9898.5   au Pk  -9899,0.     *)
+(*                   CdvSAL22     passe du Pk  -9707,5   au Pk  -9709,0.     *)
+(*  segment 28.6.1 : CdvSAL21     passe du Pk  -9557.0   au Pk  -9557,5.     *)
+(*                                                                           *)
+(*  Version 1.1.0                                                            *)
+(*  Date : 01/10/1997, Auteur : P. HOG     , Origine : site (F240)           *)
+(*  segment 28.1.0 : CdvSAL12     passe du Pk   9528,0   au Pk   9527,0.     *)
+(*  segment 28.2.0 : CdvMON12     passe du Pk  10267,5   au Pk  10267,0.     *)
+(*                   CdvMON12     passe du Pk  10558,0   au Pk  10557,5.     *)
+(*                                                                           *)
+(* ========= Version 1.1.0 du 01/10/1997 ===(1ere version validee)========== *)
+(*                                                                           *)
+(* Version 1.1.1                                                             *)
+(* Date : 07/10/1997, Auteur : P. Hog    , Origine : site (fax F247)         *)
+(*  Tout le secteur : Correction des longueurs de train pour les ArretFoncX. *)
+(*  segment 28.1.0 : L'ArretFonc2   passe du Pk   9648,0   au Pk   9647,625. *)
+(*  segment 28.2.0 : L'ArretFonc2   inchange                                 *)
+(*  segment 28.3.0 : L'ArretFonc2   passe du Pk  11083,5   au Pk  11083,625. *)
+(*  segment 28.4.0 : L'ArretFonc3   passe du Pk -11017,5   au Pk -11018,500. *)
+(*  segment 28.5.0 : La Station     passe du Pk -10423,5   au Pk -10425,0.   *)
+(*                   L'ArretFonc3   passe du Pk -10321,5   au Pk -10325,625. *)
+(*                   Le chainage 2ieme arret passe de 16,0 m a 15,0 m.       *)
+(*  segment 28.6.0 : L'ArretFonc3   passe du Pk  -9581,5   au Pk  -9581,250. *)
+(*                                                                           *)
+(* ========= Version 1.1.2 ================================================= *)
+(* Date : 13/10/1997, Auteur : F. Chanier, Origine : site (F262)             *)
+(*  segment 28.1.0 : l'enteteseg passe de 9379.5 a 9380.5                    *)
+(*  segment 28.6.1 : rang premier variant passe de 3 a 2                     *)
+(*  segment 28.6.1 : balise de reloc passe de -9636.0 a -9637.0              *)
+(* + eq dev:                                                                 *)
+(*  segment 28.5.0 : arret fonc passe de -10325.625 a -10323.625             *)
+(*                                                                           *)
+(* Version 1.1.3                                                             *)
+(*  Date : 20/10/1997, Auteur : P. Hog     , Origine : Site (FAX F272)       *)
+(*  Segment 28.1.0 : L'entete       passe du Pk   9380,5   au Pk   9381,500. *)
+(*                                                                           *)
+(* Version 1.1.4                                                             *)
+(*  Date : 08/12/1997, Auteur : F. Chanier, Origine : site (fax F336)        *)
+(*  segment 28.6.1 : l'arretsub SAL21 passe du Pk -9557.5 a -9558.0          *) 
+(*  segment 28.6.1 : l'arretsub BAQ24 passe du pk -9415.0 a -9416.5          *)                                                                         *)
+(*                                                                           *)
+(* version 1.1.5                                                             *)
+(* Date : 20/02/1998, Auteur : P. Hog        , Origine : equip. dev.         *)
+(*  ............ Arrets PA ............                                      *)
+(*  segment 28.1.0 : ArretFonc2      passe du Pk   9647,625 au pk   9672,000 *)
+(*  segment 28.2.0 : ArretFonc2      passe du Pk  10387,750 au pk  10419,000 *)
+(*  segment 28.3.0 : ArretFonc2      passe du Pk  11083,625 au pk  11100,500 *)
+(*  segment 28.4.0 : ArretFonc3 devient ArretFonc2                           *)
+(*                                   passe du Pk -11018,500 au pk -11000.000 *)
+(*  segment 28.5.0 : ArretFonc3 devient ArretFonc2                           *)
+(*                                   passe du Pk -10323,625 au pk -12295,000 *)
+(*  segment 28.6.1 : ArretFonc3 devient ArretFonc2                           *)
+(*                                   passe du Pk  -9581,250 au pk  -9563,000 *)
+(*                                                                           *)
+(* version 1.1.6                                                             *)
+(* date : 11/03/1998, Auteur : F. Chanier, Origine : Eq. dev                 *)
+(*  segment 28.1.0 : arretfonc 2 - long max passe de 110 a 118               *)
+(*  segment 28.2.0 : arretfonc 2 - long max passe de 110 a 118               *)
+(*  segment 28.3.0 : arretfonc 2 - long max passe de 110 a 118               *)
+(*  segment 28.4.0 : balise reloc passe de -11073.0 a -11090.5               *)
+(*  segment 28.4.0 : arretfonc2 - long max passe de 94 a 118                 *)
+(*                                                                           *)
+(* version 1.1.7                                                             *)
+(* date : 12/05/1998, Auteur : F. Chanier, Origine : F544                    *)
+(*  segment 28.1.0 : arrfonc2 (9672.0, 118, 9.0) devient (9672.5,118,8.5)    *) 
+(*  segment 28.2.0 : arrfonc2 (10419.0,118,3.0) devient (10419.5,118,2.5)    *)
+(*  segment 28.3.0 : arrfonc2 (11000.5,118,17.0) devient (11000,118,17.5)    *)
+(*  segment 28.4.0 : arrfonc2 (-11000.0,118,15.0) devient (-11001.0,118,14.0)*)
+(*  segment 28.6.1 : arrfonc2 (-9563.0, 94, 15.0) devient (-9564.0,94,14.0)  *)
+(*                                                                           *)
+(* version 1.1.8                                                             *)
+(* date : 14/05/1998, Auteur : F. Chanier, Origine : F549                    *)
+(*  segment 28.3.0 : arrfonc2 (11100.0,118,17.5) devient (11100.5,118,17.0)  *) 
+(*                                                                           *)
+(* version 1.1.9                                                             *)
+(* date : 02/06/1998, Auteur : F. Chanier, Origine : F559                    *)
+(*  segment 28.5.0 : arrfonc2 (-10306,94,15.0) devient (-10306.0,86,15.0)    *)
+(*  segment 28.6.1 : arrfonc2 (-9564,94,14.0) devient (-9564,86,14.0)        *)
+(*                                                                           *)
+(* version 1.2.0                                                             *)
+(* date : 09/06/1998, Auteur : F. Chanier, Origine : Eq. dev                 *)
+(*  segment 28.4.0 : TIVF en -10993.0 passe de 80 a 65                       *)
+(*  segment 28.5.0 : vit dans Ent Seg passe de 80 a 65                       *)  
+(*  segment 28.5.0 : suppression TIVF a 65 en -10632.0                       *)
+(*  segment 28.5.0 : suppression TIVF a 80 en -10289.0                       *)
+(*  segment 28.6.0 : vit dans ent seg passe de 80 a 65                       *)
+(*  segment 28.6.0 : suppression TIVF a 65 en -9882.0                        *)
+(*                                                                           *)
+(* version 1.2.1                                                             *)
+(* date : 28/03/2000, Auteur : H. Le Roy, Origine : Am Lb1099-2              *)
+(*  Modif. des points d'arret precis en station                              *)
+(*  segment 28.2.0 Manuel Montt V1 : le chainage train long augmente de 0.5m *)
+(*  segment 28.4.0 P. de Valdivia V2 : le chainage train long augmente de 1m *)
+(*  segment 28.6.1 Salvador V2 : le chainage train long augmente de 1m       *)
+(*---------------------------------------------------------------------------*)
+(* Version 1.2.2                                                             *)
+(*  Date : 05/03/2004, Auteur : Marc Plywacz, Origine : modif arrets fonc    *)
+(*   segment 28.1.0 : ARRETFONC2 : ancien  pk  9672.5 , devient              *)
+(*                    ARRETFONC1                                             *)
+(*   segment 28.2.0 : ARRETFONC2 : ancien  pk 10419.5 , devient              *)
+(*                    ARRETFONC1                                             *)
+(*   segment 28.3.0 : ARRETFONC2 : ancien  pk 11100.5 , devient              *)
+(*                    ARRETFONC1 : nouveau pk 11105.5                        *)
+
+(*   segment 28.4.0 : ARRETFONC2 : ancien  pk-11001.0 , devient              *)
+(*                    ARRETFONC1 : nouveau pk-10997.0                        *)
+(*   segment 28.5.0 : ARRETFONC2 : ancien  pk-10306.0 , devient              *)
+(*                    ARRETFONC1 : nouveau pk-10291.5                        *)
+(*   segment 28.6.0 : ARRETFONC2 : ancien  pk -9564.0 , devient              *)
+(*                    ARRETFONC1 : nouveau pk -9549.0                        *)
+(*---------------------------------------------------------------------------*)
+
+(* Version 1.2.3                                                             *)
+(*  Date : 11/03/2004, Auteur : Marc Plywacz, Origine : modif arrets fonc    *)
+(*   segment 28.1.0 : ARRETFONC1 : ancien  pk  9672.5 , devient              *)
+(*                    ARRETFONC2 : lgr max train = 122 ; chainage =  8.5     *)
+(*   segment 28.2.0 : ARRETFONC1 : ancien  pk 10419.5 , devient              *)
+(*                    ARRETFONC2 : lgr max train = 122 ; chainage =  3       *)
+(*   segment 28.3.0 : ARRETFONC1 : ancien  pk 11105.5 , devient              *)
+(*                    ARRETFONC2 : lgr max train = 122 ; chainage =  12      *)
+
+(*   segment 28.4.0 : ARRETFONC1 : ancien  pk-10997.0 , devient              *)
+(*                    ARRETFONC2 : lgr max train = 122 ; chainage =  11      *)
+(*   segment 28.5.0 : ARRETFONC1 : ancien  pk-10291.5 , devient              *)
+(*                    ARRETFONC2 : lgr max train = 122 ; chainage =  0.5     *)
+
+(*---------------------------------------------------------------------------*)
+(* Version 1.2.4                                                             *)
+(* date : 15/11/06, Auteur : Patrick Amsellem, Origine : Nouveau Train NS2004*)
+(* Modif.                                                                    *)
+(* ENTETESEG Index : ancien = 1 , nouveau = 2                                *)
+(* nouvelles pentes                                                          *)
+(*---------------------------------------------------------------------------*)
+
+(**)
+(* SEGMENT 28.1.0 *)    (* voie 1 si *)
+
+ENTETESEG       9381.5  (* abscisse *)
+                1796    (* numero segment *)
+                13      (* numero de canal *)
+                2       (* numero d'index *)
+                0       (* rang du premier variant *)
+                1100    (* caracteristiques fixes *)
+                16      (* vitesse limite 80km/h *)
+                0       (* pente reelle *)
+                16.5    (* pente compensee *)
+
+BALISE          9423.0  (* abscisse *)
+                7       (* init *)
+
+ARRETSUB        9527.0  (* abscisse : pour cdv 12 *)
+
+STATION         9547.0  (* abscisse *)
+                135.5   (* longueur quai *)
+                0100    (* quai a droite *)
+                17      (* numero de station Salvador v1 *)
+
+PENTECOMP       9582.0  (* abscisse *)
+                2.9     (* pente compensee *)
+
+BALISE          9594.5  (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+PENTECOMP       9652.0  (* abscisse *)
+                3.4     (* pente compensee *)
+
+ARRETSUB        9671.0  (* abscisse : pour cdv 13 *)
+
+ARRETFONC2      9672.5  (* abscisse *)
+                122     (* longr max train 1er arret *)
+                 8.5    (* chainage abcisse pour 2eme arret *)
+
+ARRETSUB        9816.0  (* abscisse : pour cdv 14A + 14B *)
+
+PENTECOMP       9832.0  (* abscisse *)
+                10.4    (* pente compensee *)
+
+BALISE          9869.0  (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+PENTECOMP       9942.0  (* abscisse *)
+                10.6    (* pente compensee *)
+
+(* ARRETSUB        9942.0 *) (* abscisse : pour cdv 14B *)
+
+EXTREMSIMPLE    9956.0  (* abscisse *)
+                4       (* increment de segment ---> 28.2.0 *)
+                0       (* rang des premiers variants anticipes: rang -8 *)
+                2       (* nombre de variants anticipes *)
+
+(*  *)
+(* SEGMENT 28.2.0 *)    (* voie 1 si *)
+
+ENTETESEG       9957.0  (* abscisse *)
+                1800    (* numero segment *)
+                13      (* numero de canal *)
+                2       (* numero d'index *)
+                0       (* rang du premier variant *)
+                1100    (* caracteristiques fixes *)
+                16      (* vitesse limite 80km/h *)
+                0       (* pente reelle *)
+                10.6    (* pente compensee *)
+
+ARRETSUB        10106.5 (* abscisse : pour cdv 11 *)
+
+TIVFIXE         10122.0 (* abscisse *)
+                13      (* 65 km/h *)
+
+BALISE          10130.0 (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+ARRETSUB        10267.0 (* abscisse : pour cdv 12 *)
+
+STATION         10288.0 (* abscisse *)
+                135.0   (* longueur quai *)
+                0100    (* quai a droite *)
+                18      (* numero de station Manu. MONTT  v1 *)
+
+BALISE          10335.0 (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+PENTECOMP       10342.0 (* abscisse *)
+                3.6     (* pente compensee *)
+
+ARRETSUB        10412.5  (* abscisse : pour cdv 13 *)
+
+TIVFIXE         10413.0  (* abscisse *)
+                16       (* 80 km/h *)
+
+ARRETFONC2      10419.5 (* abscisse *)
+                122     (* longr max train 1er arret *)
+                 3.0    (* chainage abcisse pour 2eme arret *)
+
+ARRETSUB        10557.5  (* abscisse : pour cdv 14 *)
+
+EXTREMSIMPLE    10573.0  (* abscisse *)
+                4        (* increment de segment ---> 28.3.0 *)
+                0        (* rang des premiers variants anticipes: rang -8 *)
+                2        (* nombre de variants anticipes *)
+(*  *)
+(* SEGMENT 28.3.0 *)     (* voie 1 si *)
+
+ENTETESEG       10573.0  (* abscisse *)
+                1804     (* numero segment *)
+                13       (* numero de canal *)
+                2        (* numero d'index *)
+                0        (* rang du premier variant *)
+                1100     (* caracteristiques fixes *)
+                16       (* vitesse limite 80km/h *)
+                0        (* pente reelle *)
+                3.6      (* pente compensee *)
+
+PENTECOMP       10582.0  (* abscisse *)
+                15.1     (* pente compensee *)
+
+BALISE          10589.5  (* abscisse *)
+                2        (* relocalisation : code 1 *)
+
+PENTECOMP       10652.0  (* abscisse *)
+                16.3     (* pente compensee *)
+
+ARRETSUB        10806.0  (* abscisse : pour cdv 11 *)
+
+BALISE          10854.0  (* abscisse *)
+                2        (* relocalisation : code 1 *)
+
+ARRETSUB        10962.5  (* abscisse : pour cdv 12 *)
+
+PENTECOMP       10972.0  (* abscisse *)
+                2.9      (* pente compensee *)
+
+STATION         10983.5  (* abscisse *)
+                135.0    (* longueur quai *)
+                0100     (* quai a droite *)
+                19       (* numero de station P de Valdivia  v1 *)
+
+BALISE          11031.0  (* abscisse *)
+                2        (* relocalisation : code 1 *)
+
+PENTECOMP       11042.0  (* abscisse *)
+                3.0      (* pente compensee *)
+
+ARRETFONC2      11105.5  (* abscisse *)
+                122      (* longr max train 1er arret *)
+                12.0     (* chainage abcisse pour 2eme arret *)
+
+ARRETSUB        11107.5  (* abscisse : pour cdv 13 *)
+
+PENTECOMP       11262.0  (* abscisse *)
+                14.8     (* pente compensee *)
+
+ARRETSUB        11297.5  (* abscisse : pour cdv 14 *)
+
+EXTREMCHAINEE   11314.0  (* abscisse *)
+                1860     (* prochain segment : 29.1.0 *)
+                0        (* numero de branche sur le prochain segment *)
+                0        (* rang des premiers variants anticipes: rang -8 *)
+                2        (* nombre de variants anticipes *)
+(*  *)
+(* segment 28.4.0 *)     (* voie 2 sp *)
+
+ENTETESEG      -11496.0  (* abscisse *)
+                1808     (* numero segment *)
+                12       (* numero de canal *)
+                2        (* numero d'index *)
+                0        (* rang du premier variant *)
+                1100     (* caracteristiques fixes *)
+                12       (* vitesse limite 60km/h *)
+                0        (* pente reelle *)
+               -19.5     (* pente compensee *)
+
+PENTECOMP      -11488.0  (* abscisse *)
+               -21.50    (* pente compensee *)
+
+BALISE         -11474.0  (* abscisse *)
+                7        (* init *)
+
+ARRETSUB       -11327.5  (* abscisse : pour cdv 23 *)
+
+BALISE         -11233.0  (* abscisse *)
+                2        (* relocalisation : code 1 *)
+
+ARRETSUB       -11139.0  (* abscisse : pour cdv 22 *)
+
+PENTECOMP      -11128.0  (* abscisse *)
+               -9.80     (* pente compensee *)
+
+STATION        -11119.0  (* abscisse *)
+                135.5    (* longueur quai *)
+                0100     (* quai a droite *)
+                19       (* numero de station P. de Valdivia  v2 *)
+
+BALISE         -11090.5  (* abscisse *)
+                2        (* relocalisation : code 1 *)
+
+PENTECOMP      -11068.0  (* abscisse *)
+               -2.40     (* pente compensee *)
+
+ARRETFONC2     -10997.0  (* abscisse *)
+                122      (* longr max train 1er arret *)
+                11.0     (* chainage abcisse pour 2eme arret *)
+
+ARRETSUB       -10994.0  (* abscisse : pour cdv 21 *)
+
+TIVFIXE        -10993.0  (* abscisse *)
+               13        (* taux 80 km/h *)
+
+PENTECOMP      -10958.0  (* abscisse *)
+               -4.40     (* pente compensee *)
+
+PENTECOMP      -10878.0  (* abscisse *)
+               -15.80    (* pente compensee *)
+
+ARRETSUB       -10839.5  (* abscisse : pour cdv 20 *)
+
+EXTREMSIMPLE   -10823.0  (* abscisse *)
+                4        (* increment de segment ---> 28.5.0 *)
+                0        (* rang des premiers variants anticipes: rang -8 *)
+                2        (* nombre de variants anticipes *)
+
+(*  *)
+(* segment 28.5.0 *)     (* voie 2 sp *)
+
+ENTETESEG      -10823.5  (* abscisse *)
+                1812     (* numero segment *)
+                12       (* numero de canal *)
+                2        (* numero d'index *)
+                0        (* rang du premier variant *)
+                1100     (* caracteristiques fixes *)
+                13       (* vitesse limite 65km/h *)
+                0        (* pente reelle *)
+               -15.8     (* pente compensee *)
+
+PENTECOMP      -10808.0  (* abscisse *)
+               -16.50    (* pente compensee *)
+
+BALISE         -10800.0  (* abscisse *)
+                2        (* relocalisation : code 1 *)
+
+ARRETSUB       -10648.5  (* abscisse : pour cdv 23 *)
+
+BALISE         -10544.5  (* abscisse *)
+                2        (* relocalisation : code 1 *)
+
+ARRETSUB       -10445.0  (* abscisse : pour cdv 22 *)
+
+STATION        -10425.0  (* abscisse *)
+                135.5    (* longueur quai *)
+                0100     (* quai a droite *)
+                18       (* numero de station MANU. MONTT  v2 sens pair *)
+
+PENTECOMP      -10408.0  (* abscisse *)
+               -6.00     (* pente compensee *)
+
+BALISE         -10378.0  (* abscisse *)
+                2        (* relocalisation : code 1 *)
+
+PENTECOMP      -10338.0  (* abscisse *)
+               -4.00     (* pente compensee *)
+
+ARRETSUB       -10299.0  (* abscisse : pour cdv 21 *)
+
+ARRETFONC2     -10291.5  (* abscisse *)
+                122      (* longr max train 1er arret *)
+                 0.5     (* chainage abcisse pour 2eme arret *)
+
+PENTECOMP      -10218.0  (* abscisse *)
+               -11.10    (* pente compensee *)
+
+ARRETSUB       -10153.5  (* abscisse : pour cdv 20B + 20A *)
+
+EXTREMSIMPLE   -10136.0  (* abscisse *)
+                4        (* increment de segment ---> 28.6.0 *)
+                0        (* rang des premiers variants anticipes: rang -8 *)
+                2        (* nombre de variants anticipes *)
+(*  *)
+(* segment 28.6.0 *)     (* voie 2 sp *)
+
+ENTETESEG      -10135.5  (* abscisse *)
+                1816     (* numero segment *)
+                12       (* numero de canal *)
+                2        (* numero d'index *)
+                0        (* rang du premier variant *)
+                1100     (* caracteristiques fixes *)
+                13       (* vitesse limite 65km/h *)
+                0        (* pente reelle *)
+               -11.1     (* pente compensee *)
+
+BALISE         -10127.0  (* abscisse *)
+                2        (* relocalisation : code 1 *)
+
+(* ARRETSUB       -9973.5 *)  (* abscisse : pour cdv 20A *)
+
+ARRETSUB       -9899.0   (* abscisse : pour cdv 23 *)
+
+BALISE         -9838.0   (* abscisse *)
+                2        (* relocalisation : code 1 *)
+
+PENTECOMP      -9808.0   (* abscisse *)
+               -9.90     (* pente compensee *)
+
+ARRETSUB       -9709.0   (* abscisse : pour cdv 22 *)
+
+EXTREMSIMPLE   -9692.5   (* abscisse *)
+                1        (* increment de segment ---> 28.6.1 *)
+                0        (* rang des premiers variants anticipes: rang -8 *)
+                0        (* nombre de variants anticipes *)
+(*  *)
+(* segment 28.6.1 *)     (* voie 2 sp *)
+
+ENTETESEG      -9691.5   (* abscisse *)
+                1817     (* numero segment *)
+                12       (* numero de canal *)
+                2        (* numero d'index *)
+                2        (* rang du premier variant *)
+                1100     (* caracteristiques fixes *)
+                13      (* vitesse limite 65km/h *)
+                0        (* pente reelle *)
+               -9.9      (* pente compensee *)
+
+STATION        -9682.0   (* abscisse *)
+                135.0    (* longueur quai *)
+                0100     (* quai a droite *)
+                17       (* numero de station Salvador  v2 sens pair *)
+
+PENTECOMP      -9638.0   (* abscisse *)
+               -3.00     (* pente compensee *)
+
+BALISE         -9637.0   (* abscisse *)
+                2        (* relocalisation : code 1 *)
+
+ARRETSUB       -9558.0   (* abscisse : pour cdv 21 *)
+
+ARRETFONC1     -9549.00  (* abscisse *)
+
+TIVFIXE        -9539.0   (* abscisse *)
+               16        (* 80 km/h *)
+
+PENTECOMP      -9538.0   (* abscisse *)
+               -6.00     (* pente compensee *)
+
+PENTECOMP      -9488.0   (* abscisse *)
+               -15.80    (* pente compensee *)
+
+PENTECOMP      -9418.0   (* abscisse *)
+               -17.30    (* pente compensee *)
+
+ARRETSUB       -9416.5   (* abscisse : pour cdv 24 *)
+
+EXTREMCHAINEE  -9400.0   (* abscisse *)
+                1740     (* prochain segment : 27.3.0 *)
+                0        (* numero de branche sur le prochain segment *)
+                0        (* rang des premiers variants anticipes: rang -8 *)
+                2        (* nombre de variants anticipes *)
+
+FIN-INVARIANTS

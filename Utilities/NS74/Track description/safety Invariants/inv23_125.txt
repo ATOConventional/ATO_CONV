@@ -1,0 +1,356 @@
+(***********************************************)
+(*        LIGNE 1 du metro de Santiago         *)
+(*                 SECTEUR 23                  *)
+(***********************************************)
+(*  premiere version : 07.05.1997              *)
+(*  auteur           : M. Plywacz              *)
+(*  version          : 1.0                     *)
+(*  version conforme aux Fax L1_F132 et F270   *)
+(***********************************************)
+
+(*---------------------------------------------------------------------------*)
+(* Modifications :                                                           *)
+(* -------------                                                             *)
+(*                                                                           *)
+(* Version 1.1.0 ==== 1ere version livree a la validation ================== *)
+(* Date : 23/10/1997, Auteur : F. Chanier , Origine : Equipe dev.            *)
+(*   Nouvelle numerotation des invariants pour livraison a la validation.    *)
+(*                                                                           *)
+(* Version 1.1.1                                                             *)
+(* Date : 03/11/1997, Auteur : P. Hog     , Origine : Site  FAX F297         *)
+(*  Segment 23.1.0 : ArrSub PDG11A  passe du Pk   2746,5   au Pk   2746,000. *)
+(*                   ArrSub PDG12   passe du Pk   2897,0   au Pk   2896,500. *)
+(*  Segment 23.1.1 : ArrSub USA12   passe du Pk   3486,0   au Pk   3485,500. *)
+(*  Segment 23.2.0 : 1 ere balise   passe du Pk  -4050,0   au Pk  -4055,500. *)
+(*                                                                           *)
+(* version 1.1.2                                                             *)
+(* Date : 05/11/1997, Auteur: P. Hog    , origine : Site, Fax F300           *)
+(*  segment 23.2.0 : ArretFonc3     passe du Pk  -3939,25  au Pk  -3939,500. *)
+(*  segment 23.2.1 : ArretFonc3     passe du Pk  -2951,50  au Pk  -2950,750. *)
+(*                                                                           *)
+(* Version 1.1.3                                                             *)
+(* Date : 07/11/1997, Auteur : F. Chanier, Origine : site, Fax F303          *)        
+(*  segment 23.2.1 : station passe de -3052.5 a -3053.5                      *)
+(*  segment 23.2.1 : PDG21 passe de -2927.0 a -2928.0                        *) 
+(*  segment 23.2.1 : PDG20 passe de -2787.0 a -2788.0                        *)
+(*  segment 23.2.1 : extremite passe de -2772.0 a -2773.0                    *)
+(*  segment 23.1.0 : arrfonc passe de 3017.75 a 3018.0                       *)
+(*  segment 23.1.1 : arrfonc passe de 3608.0 a 3608.375                      *) 
+(*  segment 23.2.1 : arrfonc passe de -2950.750 a -2951.750                  *)
+(*  segment 23.1.0 : entete passe de 2474.5 a 2476.5                         *)
+(*                                                                           *)
+(* Version 1.1.4                                                             *)
+(* Date : 12/11/1997, Auteur : F. Chanier, Origine : site, Fax F310          *)        
+(*  segment 23.1.0 : balise de loc passe de 2744.5 a 2744.0                  *) 
+(*  segment 23.1.0 : sig PDG11A passe de 2746.0 a 2745.0                     *)
+(*  segment 23.1.0 : sig PDG12 passe de 2896.5 a 2896.0                      *)
+(*  sgement 23.1.0 : station passe de 2917.0 a 2916.5                        *)
+(*  segment 23.1.0 : arretfonc passe de 3018.0 a 3017.0                      *)
+(*  segment 23.1.0 : sig PDG13 passe de 3042.0 a 3041.0                      *)
+(*  segment 23.1.0 : balise de loc passe de 2965.0 a 2964.0                  *)
+(*  segment 23.1.0 : extremite chai passe de 3057.0 a 3056.0                 *)
+(*  segment 23.1.1 : sig PDG14 passe de 3181.0 a 3180.5                      *)
+(*  segment 23.1.1 : balise de loc passe de 3266.5 a 3266.0                  *)
+(*  segment 23.1.1 : sig USA11 passe de 3349.0 a 3348.0                      *)
+(*  segment 23.1.1 : sig USA12 passe de 3485.5 a 3485.0                      *)
+(*  segment 23.1.1 : station passe de 3506.5 a 3506.0                        *)
+(*  segment 23.1.1 : arretfonc passe de 3608.375 a 3607.375                  *)
+(*  segment 23.1.1 : balise de loc passe de 3545.0 a 3544.0                  *)
+(*  segment 23.1.1 : sig USA13 passe de 3631.0 a 3630.0                      *)
+(*  segment 23.1.1 : extremite chai passe de 3646.0 a 3645.0                 *)
+(*  segment 23.2.1 : correction erreur du 7/11 station passe de -3053.5      *)
+(*                   a -3052.5                                               *)
+(*  segment 23.2.1 : corr. erreur du 7/11 loc passe de -3006.0 a -3007.0     *) 
+(*                                                                           *)
+(* Version 1.1.5                                                             *)
+(* Date : 05/12/1997, Auteur : F. Chanier, Origine : fiche gauvin n 79       *)        
+(*  segment 23.2.0 : le num de station Univ. Santiago est 7 et non 5         *) 
+(*                                                                           *)
+(* Version 1.1.6                                                             *)
+(* Date : 09/03/1998, Auteur : F. Chanier, Origine : Eq. Dev                 *)
+(*  segment 23.1.0 : arretfonc2 en 3017 (102, 32.5) passe en 3035.5          *)
+(*                   (118, 15.0)                                             *)
+(*  segment 23.1.1 : arretfonc2 en 3607.375 (102, 32.5) passe en 3625.0      *)
+(*                   (118, 15.0)                                             *)
+(*  segment 23.2.0 : balise en -3586.0 passe en -3598.0                      *)
+(*  segment 23.2.0 : arretfonc3 (-3539.0, 70, 16.0, 94, 16.5) paase en       *)
+(*                   arretfonc2 (-3510.5, 118, 3.0)                          *)
+(*  segment 23.2.1 : arretfonc3 en -2951.75 (70, 16.0, 94, 16.5) passe en    *)
+(*                   arretfonc1 en -2920.5                                   *)
+(*                                                                           *)
+(* Version 1.1.7  (version livree a Santiago le 25/5)                        *)
+(* Date : 18/05/1998, Auteur : F. Chanier, Origine : F550                    *)
+(*  segment 23.2.0 : arretfonc2 (-3510.5,118,3.0) devient (-3508.5,118,1.0)  *)
+(*  segment 23.2.1 : arretfonc1 (-2920.5) devient (-2921.0)                  *)
+(*                                                                           *)
+(* Version 1.1.8                                                             *)
+(* Date : 11/06/1998, Auteur : F. Chanier, Origine : Eq Dev                  *)
+(*  segment 23.1.1 : ajout TIVF a 65 en 3630.0                               *)
+(*                                                                           *)
+(* Version 1.1.9                                                             *)
+(* Date : 26/06/1998, Auteur : P. Hog    , Origine : Eq Dev                  *)
+(*  segment 23.1.1 : TivF en 3630.0 passe de 65 a 70 km/h                    *)
+(*                                                                           *)
+(* Version 1.2.0                                                             *)
+(* Date : 27/08/1998, Auteur : P. Hog    , Origine : Demande site            *)
+(*  segment 23.2.0 : ArrSub USA22   passe du Pk  -3661,0   au Pk  -3661,5    *)
+(*                                                                           *)
+(* Version 1.2.1                                                             *)
+(* Date : 03/04/2000, Auteur : P. Hog    , Origine : am Lb1099-2             *)
+(*  segment 23.2.0 U. Santiago V2 : Pk Arretfonc2 passe de -3508.5 a -3510   *)
+(*                                  Le chainage train long augmente de 2m    *)
+(*                                                                           *)
+(* version 1.2.2                                                             *)
+(* Date : 19/01/2004, Auteur : M. Plywacz, origine : modif arrets fonc       *) 
+(* ref :[                                                                    *)
+(*  segment 23.1.0 : ARRETFONC2 : ancien  pk 3035.5 , devient                *)
+(*                   ARRETFONC1 : nouveau pk 3038.5                          *)
+(*  segment 23.1.1 : ARRETFONC2 : ancien  pk 3625.0 , devient                *)
+(*                   ARRETFONC1 : nouveau pk 3628.0                          *)
+(*  segment 23.2.0 : ARRETFONC2 :                   , devient                *)
+(*                   ARRETFONC1 :                                            *)
+(*  segment 23.2.1 : ARRETFONC1 : ancien  pk-2921.0 , devient                *)
+(*                   ARRETFONC1 : nouveau pk-2919.5                          *)
+(*                                                                           *)
+(* version 1.2.3                                                             *)
+(* Date : 08/03/2004, Auteur : M. Plywacz, origine : modif arrets fonc       *) 
+(* ref :[                                                                    *)
+(*  segment 23.1.0 : ARRETFONC1 : ancien  pk 3038.5 , devient                *)
+(*                   ARRETFONC2 : lgr max train = 122 ; chainage =  12       *)
+(*  segment 23.1.1 : ARRETFONC1 : ancien  pk 3628.0 , devient                *)
+(*                   ARRETFONC2 : lgr max train = 122 ; chainage =  11       *)
+(*  segment 23.2.0 : ARRETFONC1 :                   , devient                *)
+(*                   ARRETFONC2 : lgr max train = 122 ; chainage =  3        *)
+(* version 1.2.4                                                             *)
+(* Date : 09/03/2004, Auteur : M. Plywacz, origine : modif arrets fonc       *) 
+(*  segment 23.2.1 : ARRETFONC1 : ancien  pk-2919.5 , devient                *)
+(*                   ARRETFONC1 : nouveau pk-2921.0                          *)
+(*---------------------------------------------------------------------------*)
+(* version 1.2.5                                                             *)
+(* date : 06/11/06, Auteur : Patrick Amsellem, Origine : Nouveau Train NS2004*)
+(*  Modif.                                                                   *)
+(* ENTETESEG Index : ancien = 1 , nouveau = 2                                *)
+(* nouvelles pentes                                                          *)
+(*---------------------------------------------------------------------------*)
+
+
+(*  *)
+(* SEGMENT 23.1.0 *)  (* voie 1 si *)
+
+ENTETESEG       2476.5  (* abscisse *)
+                1476    (* numero segment *)
+                13      (* numero de canal *)
+                2       (* numero d'index *)
+                0       (* rang du premier variant *)
+                1100    (* caracteristiques fixes *)
+                16      (* vitesse limite 80km/h *)
+                0       (* pente reelle *)
+                3.2     (* pente compensee *)
+
+PENTECOMP       2482.0  (* abscisse *)
+                9.1     (* pente compensee *)
+
+BALISE          2498.0  (* abscisse *)
+                7       (* init *)
+
+PENTECOMP       2612.0  (* abscisse *)
+                9.0     (* pente compensee *)
+
+BALISE          2744.0  (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+ARRETSUB        2745.0  (* abscisse : pour cdv 11A+B *)
+
+ARRETSUB        2896.0  (* abscisse : pour cdv 12 *)
+
+STATION         2916.5  (* abscisse *)
+                135.0   (* longueur quai *)
+                0100    (* quai a droite *)
+                6       (* numero de station Pila del ganso v1 *)
+
+BALISE          2964.0  (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+PENTECOMP       2972.0  (* abscisse *)
+                3.1     (* pente compensee *)
+
+ARRETFONC2      3038.5 (* abscisse *)
+                122     (* longr max train 1er arret *)
+                12.0    (* chainage abcisse pour 2eme arret *)
+
+ARRETSUB        3041.0  (* abscisse : pour cdv 13 *)
+
+EXTREMSIMPLE    3056.0  (* abscisse *)
+                1       (* increment de segment ---> 23.1.1 *)
+                0       (* rang des premiers variants anticipes: rang -8 *)
+                0       (* nombre de variants anticipes *)
+
+
+(*  *)
+(* SEGMENT 23.1.1 *)    (* voie 1 si *)
+
+ENTETESEG       3056.0  (* abscisse *)
+                1477    (* numero segment *)
+                13      (* numero de canal *)
+                2       (* numero d'index *)
+                3       (* rang du premier variant *)
+                1100    (* caracteristiques fixes *)
+                16      (* vitesse limite 80km/h *)
+                0       (* pente reelle *)
+                3.1     (* pente compensee *)
+
+ARRETSUB        3180.5  (* abscisse : pour cdv 14 *)
+
+PENTECOMP       3202.0  (* abscisse *)
+                10.6    (* pente compensee *)
+
+BALISE          3266.0  (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+PENTECOMP       3312.0  (* abscisse *)
+                10.4    (* pente compensee *)
+
+ARRETSUB        3348.0  (* abscisse : pour cdv 11 *)
+
+ARRETSUB        3485.0  (* abscisse : pour cdv 12 *)
+
+STATION         3506.0  (* abscisse *)
+                135.0   (* longueur quai *)
+                0100    (* quai a droite *)
+                7       (* numero de station U. Santiago v1 *)
+
+BALISE          3544.0  (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+PENTECOMP       3552.0  (* abscisse *)
+                3.5     (* pente compensee *)
+
+ARRETFONC2      3628.0  (* abscisse *)
+                122     (* longr max train 1er arret *)
+                12.0    (* chainage abcisse pour 2eme arret *)
+
+ARRETSUB        3630.0  (* abscisse : pour cdv 13 *)
+
+TIVFIXE         3630.0  (* abscisse *)
+                14      (* vitesse tabulee : 70km/h *) 
+
+EXTREMCHAINEE   3645.0  (* abscisse *)
+                1540    (* prochain segment : 24.1.0 *)
+                0       (* numero de branche sur le prochain segment *)
+                0       (* rang des premiers variants anticipes: rang -8 *)
+                3       (* nombre de variants anticipes *)
+
+
+(*  *)
+(* segment 23.2.0 *)    (* voie 2 sp *)
+
+ENTETESEG      -4078.5  (* abscisse *)
+                1480    (* numero segment *)
+                12      (* numero de canal *)
+                2       (* numero d'index *)
+                0       (* rang du premier variant *)
+                1100    (* caracteristiques fixes *)
+                16      (* vitesse limite 80km/h *)
+                0       (* pente reelle *)
+               -14.10   (* pente compensee *)
+
+BALISE         -4055.5  (* abscisse *)
+                7       (* init *)
+
+PENTECOMP      -4048.0  (* abscisse *)
+               -5.90    (* pente compensee *)
+
+PENTECOMP      -3978.0  (* abscisse *)
+               -3.60    (* pente compensee *)
+
+ARRETSUB       -3851.0  (* abscisse : pour cdv 23 *)
+
+BALISE         -3800.0  (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+ARRETSUB       -3661.5  (* abscisse : pour cdv 22 *)
+
+STATION        -3641.5  (* abscisse *)
+                135.0   (* longueur quai *)
+                0100    (* quai a droite *)
+                7       (* numero de station U. Santiago v2 *)
+
+BALISE         -3598.0  (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+ARRETSUB       -3516.0  (* abscisse : pour cdv 21 *)
+
+ARRETFONC2     -3510.0  (* abscisse *)
+                122     (* longr max train 1er arret *)
+                 3.0    (* chainage abcisse pour 2eme arret *)
+
+(* TIVFIXE        -3499.0  *)(* abscisse *)
+(*                16      *)(* vitesse tabulee : 80km/h *) 
+
+EXTREMSIMPLE   -3501.0  (* abscisse *)
+                1       (* increment de segment ---> 23.2.1 *)
+                0       (* rang des premiers variants anticipes: rang -8 *)
+                0       (* nombre de variants anticipes *)
+
+(* 
+ *)
+(* segment 23.2.1 *)
+
+ENTETESEG      -3502.0  (* abscisse *)
+                1481    (* numero segment *)
+                12      (* numero de canal *)
+                2       (* numero d'index *)
+                3       (* rang du premier variant *)
+                1100    (* caracteristiques fixes *)
+                16      (* vitesse limite 80km/h *)
+                0       (* pente reelle *)
+               -3.60    (* pente compensee *)
+
+PENTECOMP      -3498.0  (* abscisse *)
+               -5.00    (* pente compensee *)
+
+PENTECOMP      -3438.0  (* abscisse *)
+               -11.10   (* pente compensee *)
+
+ARRETSUB       -3351.0  (* abscisse : pour cdv 23 *)
+
+BALISE         -3295.0  (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+PENTECOMP      -3278.0  (* abscisse *)
+               -10.40   (* pente compensee *)
+
+ARRETSUB       -3072.5  (* abscisse : pour cdv 22 *)
+
+STATION        -3052.5  (* abscisse *)
+                135.0   (* longueur quai *)
+                0100    (* quai a droite *)
+                6       (* numero de station Pila d Ganso v2 sens pair *)
+
+PENTECOMP      -3008.0  (* abscisse *)
+               -3.00    (* pente compensee *)
+
+BALISE         -3007.0  (* abscisse *)
+                2       (* relocalisation : code 1 *)
+
+ARRETSUB       -2928.0  (* abscisse : pour cdv 21B+A *)
+
+ARRETFONC1     -2921.0  (* abscisse *)
+
+PENTECOMP      -2908.0  (* abscisse *)
+               -5.20    (* pente compensee *)
+
+PENTECOMP      -2838.0  (* abscisse *)
+               -9.00    (* pente compensee *)
+
+ARRETSUB       -2788.0  (* abscisse : pour cdv 20 *)
+
+EXTREMCHAINEE   -2773.0  (* abscisse *)
+                1424    (* prochain segment : 22.4.0 *)
+                0       (* numero de branche sur le prochain segment *)
+                0       (* rang des premiers variants anticipes: rang -8 *)
+                2       (* nombre de variants anticipes *)
+
+
+
+FIN-INVARIANTS

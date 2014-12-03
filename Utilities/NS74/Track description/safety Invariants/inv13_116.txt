@@ -1,0 +1,477 @@
+(***********************************************)
+(*        LIGNE 2 du metro de Santiago         *)
+(*                 SECTEUR 13                  *)
+(***********************************************)
+(*  premiere version : 20.02.1997              *)
+(*  auteur           : M. Plywacz              *)
+(*  version          : 1.0.4                   *)
+(*  version conforme - fc - du 05.09.97        *)
+(***********************************************)
+
+(*---------------------------------------------------------------------------*)
+(* Modifications :                                                           *)
+(* -------------                                                             *)
+(*                                                                           *)
+(* Date : 28/07/1997, Auteur : P. HOG     , Origine : demande site (L2-F147) *)
+(*  segment 13.1.0 : La balise 3  passe du Pk  -9430,0   au Pk  -9420,0.     *)
+(*  segment 13.2.0 : La balise 2  passe du Pk  -8730,0   au Pk  -8748,5.     *)
+(*                   La balise 3  passe du Pk  -8520,0   au Pk  -8509,0.     *)
+(*  segment 13.3.0 : La balise 2  passe du Pk   8055,0   au Pk   8047,5.     *)
+(*  segment 13.4.0 : La balise 1  passe du Pk   8610,0   au Pk   8614,0.     *)
+(*                   La balise 2  passe du Pk   8890,0   au Pk   8891,0.     *)
+(*                   La balise 3  passe du Pk   9070,0   au Pk   9063,0.     *)
+(*                                                                           *)
+(*  Date : 20/08/1997, Auteur : F. Chanier, Origine : demande site (L2-F166) *)
+(*  segment 13.3.1 : La balise reloc  passe du Pk   8320,5   au Pk   8320,0. *)
+(*  segment 13.4.0 : entete segment passe de 8552,0 a 8551,5.                *)
+(*  segment 13.4.0 : balise reloc passe du Pk   8614,0   au Pk   8615,5.     *)
+(*                                                                           *)
+(*  Date : 28/08/1997, Auteur : F. Chanier, Origine : demande site (L2-F179) *)
+(*  segment 13.1.0 : Le signal PHI11A passe du Pk -9497.5  au Pk -9498.0.    *)
+(*  segment 13.3.0 : le signal RON23 passe de 8081.0 a 8080.0.               *)
+(*  segment 13.3.0 : le signal RON22 passe du Pk 8252.0  au Pk 8251.5.       *)
+(*  segment 13.3.1 : le signal RON20 passe du Pk 8537.0  au Pk 8536.5.       *)
+(*                                                                           *)
+(*  Date : 29/08/1997, Auteur : F. Chanier, Origine : equipe developpement   *)
+(*  segment 13.2.0 : on rajoute TIV 60 au Pk -8766.0.                        *)
+(*  segment 13.2.0 : on rajoute TIV 70 au pk -8290.0.                        *)
+(*                                                                           *)
+(*  Date : 03/09/1997, Auteur : F. Chanier, Origine : eq dev et secu         *)
+(*  segment 13.1.0 : entete sg modifiee passe d'un taux de 12 a 16           *)
+(*  segment 13.1.1 : segment ent modifiee passe d'un taux de 12 a 16         *)
+(*  segment 13.1.1 : le TIV fixe de -9152.0 disparait                        *) 
+(*  segment 13.2.0 : modif de l'entete seg passage de taux 12 a 16           *)
+(*  segment 13.2.0 : modif du taux de vitesse -8290.0 de 70 a 80             *)
+(*  segment 13.2.1 : modif du taux de l'entete passe de 70 a 80              *)
+(*  segment 13.3.0 : modif du taux de l'entete passe de 65 a 80              *)
+(*  segment 13.3.1 : modif du taux de l'entete passe de 65 a 80              *)
+(*  segment 13.3.1 : suppression du TIV en 8456.0                            *)
+(*  segemnt 13.4.0 : modif de taux de l'entete passe de 55 a 80              *)
+(*  segment 13.4.0 : suppression du TIV en 9308.0                            *)
+(*                                                                           *)
+(*  date: 05/09/1997, Auteur : F. Chanier, Origine: recalage arret fonc      *)
+(*                                                                           *)
+(*  version 1.0.5                                                            *)
+(*  date: 4/2/1998, Auteur: F. Chanier, Origine: F424                        *)
+(*  segment 13.1.1 : arretfonc passe de -9203.00 a -9202.75                  *)
+(*  segment 13.2.0 : arretfonc passe de -8307.0 a -8306.625                  *)
+(*                                                                           *)
+(*  version 1.0.6                                                            *)
+(*  date: 23/03/1998, Auteur: F. Chanier, Origine: Eq. dev                   *)
+(*  segment 13.1.1 : arretfonc3 (-9202.75, 70, 16.0, 94, 17.0) devient       *)
+(*                   arretfonc2 (-9188, 82, 20.0)                            *)
+(*  segment 13.2.0 : arretfonc3 (-8306.625, 70, 16.0, 94, 16.5) devient      *)
+(*                   arretfonc2 (-8293, 78, 20.0)                            *) 
+(*  segment 13.3.1 : arretfonc2 (8371.25, 102, 32.5) devient                 *)
+(*                   arretfonc2 (8374.5, 118, 31.5)                          *)   
+(*  segment 13.4.0 : arretfonc2 (9268.0, 102, 32.5) devient                  *)
+(*                   arretfonc2 (9268.5, 102, 33.5)                          *)  
+(*                                                                           *)
+(*  version 1.0.7                                                            *)
+(*  date: 08/04/1998, Auteur: F. Chanier, Origine: Fax F509                  *)
+(*  segment 13.2.0 : arretfonc2 (-8293.0, 78, 20.0) devient                  *)
+(*                   arretfonc2 (-8290.0, 86, 17.0)                          *)
+(*  segment 13.4.0 : arretfonc2 (9268.5, 102, 33.5) devient                  *)
+(*                   arretfonc2 (9270.5, 102, 31.5)                          *)
+(*                                                                           *)
+(*  version 1.0.8                                                            *)
+(*  date: 22/04/1998, Auteur: F. Chanier, Origine: Fax F522                  *)
+(*  segment 13.1.1 : arretfonc2 (-9188.0, 82, 20.0) devient                  *)
+(*                   arretfonc2 (-9188.5, 82, 20.5)                          *) 
+(*  segment 13.2.0 : arretfonc2 (-8290.0, 86, 17.0) devient                  *)
+(*                   arretfonc2 (-8289.5, 86, 16.5)                          *)   
+(*  segment 13.2.0 : arretfonc2 (-8290.0, 86, 17.0) devient                  *)
+(*                   arretfonc2 (-8289.5, 86, 16.5)                          *)   
+(*  segment 13.4.0 : arretfonc2 (9270.5, 102, 31.5) devient                  *)
+(*                   arretfonc2 (9271.0, 102, 31.0)                          *)  
+(*                                                                           *)
+(*  version 1.0.9                                                            *)
+(*  date: 25/05/1998, Auteur: F. Chanier, Origine: Fax F522                  *)
+(*  segment 13.1.1 : arretfonc2 (-9188.5, 82, 20.5) devient                  *)
+(*                   arretfonc2 (-9188.5, 86, 20.5)                          *)
+(*                                                                           *)
+(*  version 1.1.0                                                            *)
+(*  date: 12/06/1998, Auteur: F. Chanier, Origine: Eq. dev                   *)
+(*  segment 13.1.1 : ajout d'un TIVF a 60 en -9178.0                         *) 
+(*  segment 13.2.0 : suppression d'un TIVF a 60 en -8766.0                   *)
+(*  segment 13.2.0 : la vit en entete seg passe de 80 a 60                   *)
+(*                                                                           *)
+(*  version 1.1.1                                                            *)
+(*  date: 06/03/2000, Auteur: H. Le Roy, Origine: am lb1099-2                *)
+(*  Modif. des points d'arret precis en station                              *)
+(*  segment 13.1.1 P. Higgins V1 : le chainage train long diminue de 0,5m    *)
+(*  segment 13.2.0 Pondizzone V1 : le chainage train long augmente de 0.5m   *)
+(*                                                                           *)
+(*---------------------------------------------------------------------------*)
+(*  version 1.1.2                                                            *)
+(* date : 04/12/06, Auteur : Patrick Amsellem, Origine : Nouveau Train NS2004*)
+(*  Modif.                                                                   *)
+(* ENTETESEG Index : ancien = 1 , nouveau = 2                                *)
+(* nouvelles pentes                                                          *)
+(*---------------------------------------------------------------------------*)
+(*  version 1.1.3                                                            *)
+(* date : 16/11/0, Auteur : Ph. Hog, Origine : Nouveau Train NS2004          *)
+(*  segment 13.1.1 ArretFonc -9188,5 ; chainage train lg passe de  86 à 102 m*)
+(*  segment 13.2.0 ArretFonc -8289,5 ; chainage train lg passe de  86 à 102 m*)
+(*  segment 13.3.1 ArretFonc  8374,5 ; chainage train lg passe de 118 à 102 m*)
+(*---------------------------------------------------------------------------*)
+(*  version 1.1.4                                                            *)
+(* date : 10/12/07, Auteur :Patrick Amsellem, Origine : Train NS74 ET NS93   *)
+(*  segment 13.2.0 ArretFonc -8289,5 ; chainage train lg passe de  102 à 86 m*)
+(*---------------------------------------------------------------------------*)
+(*  version 1.1.5                                                            *)
+(*  date : 01/10/12                                                          *)
+(*             Auteur :Xavier Raby , Origine : modifs suites tests sur voies *)
+(*  segment 13.1.1 ArretFonc2 devient ArretFonc1 pk passe de 9188,5 a-9168,4 *)
+(*                 Balise  pk passe de 9256 a 9266                           *)
+(*  segment 13.2.0 ArretFonc2 longueur max train passe de 86 a 94            *)
+(*                 Balise  pk passe de 8360 a 8370                           *)
+(*  segment 13.4.0 ArretFonc2 devient ArretFonc1 pk passe de 9271 a 9302     *)
+(*---------------------------------------------------------------------------*)
+(*  version 1.1.6                                                            *)
+(*  date : 17/10/12                                                          *)
+(*             Auteur :Xavier Raby , Origine : modifs suites tests sur voies *)
+(*  segment 13.2.0 ENTETESEG la vitesse de 65 a 60                           *)
+(*  segment 13.1.0 BALISE passe de 9420 a 9420,5                             *)
+(*                 ARRETSUB passe de 9323.5 a 9324                           *)
+(*                 EXTREMSIMPLE passe de 9308.5 a 9309.5                     *)
+(*  segment 13.1.1 PAP_1 devie nt PAP_3 au pk 9300.5                         *)
+(*  segment 13.2.0 ENTETESEG passe de -9025.5 a 9025                         *)
+(*                 BALISE passe de 8748.5 a 8749                             *)
+(*                 ARRETSUB passe de 8599.5 a 8600                           *)
+(*                 BALISE passe de 8509 a 8510                               *)
+(*                 ARRETSUB passe de 8427 a 8428                             *)
+(*                 STATION passe de 8407 a 8408                              *)
+(*                 BALISE passe de 8370 a 8371.5                             *)
+(*                 TIVFIXE passe de 8290 a 8291.5                            *)
+(*                 ARRETFONC2 passe de 8289.5 a 8291                         *)
+(*                 ARRETSUB passe de 8282 a 8283.5                           *)
+(*                 EXTREMSIMPLE passe de 8250 a 8251.5                       *)
+(*  segment 13.2.1 EXTREMCHAINEE passe de 8124.5 a 8125                      *)
+(*---------------------------------------------------------------------------*)
+(* --------------------- SEGMENT 13.1.0 --------------------- *)
+ENTETESEG        -10014    (* abscisse _Bloc nr. 1 *)
+                 836       (* numero de segment *)
+                 13        (* numero de canal *)
+                 2         (* numero d'index *)
+                 0         (* rang du premier variant *)
+                 1000      (* caracteristiques fixes *)
+                 16        (* vitesse limite 80km/h *)
+                 0         (* pente reelle *)
+                 9.7       (* pente compensee *)
+
+PENTECOMP        -10008    (* abscisse _Bloc nr. 2 *)
+                 18.20     (* pente compensee *)
+
+BALISE           -9990     (* abscisse _Bloc nr. 3 *)
+                 7         (* init *)
+
+PENTECOMP        -9938     (* abscisse _Bloc nr. 4 *)
+                 18.00     (* pente compensee *)
+
+PENTECOMP        -9828     (* abscisse _Bloc nr. 5 *)
+                 4.50      (* pente compensee *)
+
+PENTECOMP        -9778     (* abscisse _Bloc nr. 6 *)
+                 2.60      (* pente compensee *)
+
+BALISE           -9710     (* abscisse _Bloc nr. 7 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSUB         -9498     (* abscisse pour cdv 11A _Bloc nr. 8 *)
+
+PENTECOMP        -9468     (* abscisse _Bloc nr. 9 *)
+                 13.60     (* pente compensee *)
+
+BALISE           -9420.5   (* abscisse _Bloc nr. 10 *)
+                 2         (* relocalisation : code 1 *)
+
+PENTECOMP        -9408     (* abscisse _Bloc nr. 11 *)
+                 9.80      (* pente compensee *)
+
+PENTECOMP        -9368     (* abscisse _Bloc nr. 12 *)
+                 -1.30     (* pente compensee *)
+
+ARRETSUB         -9324     (* abscisse pour cdv 12  _Bloc nr. 13 *)
+
+EXTREMSIMPLE     -9309.5   (* abscisse _Bloc nr. 14 *)
+                 1         (* increment de seg --> vers 837 - 13.1.1 *)
+                 0         (* rang premier variant anticipee *)
+                 0         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 13.1.1 --------------------- *)
+
+ENTETESEG        -9308.5   (* abscisse _Bloc nr. 15 *)
+                 837       (* numero de segment *)
+                 13        (* numero de canal *)
+                 2         (* numero d'index *)
+                 2         (* rang du premier variant *)
+                 1000      (* caracteristiques fixes *)
+                 16        (* vitesse limite 80km/h *)
+                 0         (* pente reelle *)
+                 -1.3      (* pente compensee *)
+
+STATION          -9302     (* abscisse _Bloc nr. 16 *)
+                 135.0     (* longueur quai *)
+                 0100      (* quai a d *)
+                 35        (* numero station P. Higgin *)
+
+ARRETFONC3       -9300.5   (* abscisse  _Bloc nr. 17 *)
+                 50        (* longueur min train: 1er arret *)
+                 0         (* chainage abscisse --> 2eme arret *)
+                 50        (* longueur min train: 2eme arret *)
+                 0         (* chainage abscisse --> 2eme arret *)
+
+PENTECOMP        -9288     (* abscisse _Bloc nr. 18 *)
+                 -2.90     (* pente compensee *)
+
+BALISE           -9266     (* abscisse _Bloc nr. 19 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSUB         -9178     (* abscisse pour cdv 13  _Bloc nr. 20 *)
+
+TIVFIXE          -9178     (* abscisse _Bloc nr. 21 *)
+                 12        (* vitesse tabulee = 60km/h *)
+
+PENTECOMP        -9118     (* abscisse _Bloc nr. 22 *)
+                 -17.50    (* pente compensee *)
+
+PENTECOMP        -9078     (* abscisse _Bloc nr. 23 *)
+                 -22.20    (* pente compensee *)
+
+ARRETSUB         -9038.5   (* abscisse pour cdv 14  _Bloc nr. 24 *)
+
+EXTREMSIMPLE     -9023.5   (* abscisse _Bloc nr. 25 *)
+                 3         (* increment de seg --> vers 840 - 13.2.0 *)
+                 0         (* rang premier variant anticipee *)
+                 1         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 13.2.0 --------------------- *)
+
+ENTETESEG        -9025     (* abscisse _Bloc nr. 26 *)
+                 840       (* numero de segment *)
+                 13        (* numero de canal *)
+                 2         (* numero d'index *)
+                 0         (* rang du premier variant *)
+                 1000      (* caracteristiques fixes *)
+                 12        (* vitesse limite 60km/h *)
+                 0         (* pente reelle *)
+                 -22.2     (* pente compensee *)
+
+BALISE           -8995     (* abscisse _Bloc nr. 27 *)
+                 2         (* relocalisation : code 1 *)
+
+BALISE           -8749     (* abscisse _Bloc nr. 28 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSUB         -8600     (* abscisse pour cdv 11  _Bloc nr. 29 *)
+
+BALISE           -8510     (* abscisse _Bloc nr. 30 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSUB         -8428     (* abscisse pour cdv 12  _Bloc nr. 31 *)
+
+STATION          -8408     (* abscisse _Bloc nr. 32 *)
+                 135.0     (* longueur quai *)
+                 0100      (* quai a d *)
+                 36        (* numero station Rondizzon *)
+
+BALISE           -8371.5   (* abscisse _Bloc nr. 33 *)
+                 2         (* relocalisation : code 1 *)
+
+PENTECOMP        -8368     (* abscisse _Bloc nr. 34 *)
+                 -6.40     (* pente compensee *)
+
+PENTECOMP        -8308     (* abscisse _Bloc nr. 35 *)
+                 -3.90     (* pente compensee *)
+
+TIVFIXE          -8291.5   (* abscisse _Bloc nr. 36 *)
+                 16        (* vitesse tabulee = 80km/h *)
+
+ARRETFONC2       -8291     (* abscisse  _Bloc nr. 37 *)
+                 94        (* longueur max train: 1er arret *)
+                 17.0      (* chainage abscisse --> 2eme arret *)
+
+ARRETSUB         -8283.5   (* abscisse pour cdv 13  _Bloc nr. 38 *)
+
+EXTREMSIMPLE     -8251.5   (* abscisse _Bloc nr. 39 *)
+                 1         (* increment de seg --> vers 841 - 13.2.1 *)
+                 0         (* rang premier variant anticipee *)
+                 0         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 13.2.1 --------------------- *)
+
+ENTETESEG        -8250     (* abscisse _Bloc nr. 40 *)
+                 841       (* numero de segment *)
+                 13        (* numero de canal *)
+                 2         (* numero d'index *)
+                 3         (* rang du premier variant *)
+                 1000      (* caracteristiques fixes *)
+                 16        (* vitesse limite 80km/h *)
+                 0         (* pente reelle *)
+                 -3.9      (* pente compensee *)
+
+PENTECOMP        -8188     (* abscisse _Bloc nr. 41 *)
+                 -22.50    (* pente compensee *)
+
+PENTECOMP        -8158     (* abscisse _Bloc nr. 42 *)
+                 -34.60    (* pente compensee *)
+
+ARRETSUB         -8139.5   (* abscisse pour cdv 10A _Bloc nr. 43 *)
+
+EXTREMCHAINEE    -8125     (* abscisse _Bloc nr. 44 *)
+                 900       (* prochain segment 14.1.0 *)
+                 0         (* numero de branche sur prochain segment *)
+                 0         (* rang premier variant anticipee *)
+                 1         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 13.3.0 --------------------- *)
+
+ENTETESEG        7707.5    (* abscisse _Bloc nr. 45 *)
+                 844       (* numero de segment *)
+                 12        (* numero de canal *)
+                 2         (* numero d'index *)
+                 0         (* rang du premier variant *)
+                 1100      (* caracteristiques fixes *)
+                 16        (* vitesse limite 80km/h *)
+                 0         (* pente reelle *)
+                 -13.7     (* pente compensee *)
+
+BALISE           7775      (* abscisse _Bloc nr. 46 *)
+                 7         (* init *)
+
+PENTECOMP        7962      (* abscisse _Bloc nr. 47 *)
+                 -5.00     (* pente compensee *)
+
+PENTECOMP        8032      (* abscisse _Bloc nr. 48 *)
+                 2.60      (* pente compensee *)
+
+BALISE           8047.5    (* abscisse _Bloc nr. 49 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSUB         8080      (* abscisse pour cdv  23 _Bloc nr. 50 *)
+
+PENTECOMP        8092      (* abscisse _Bloc nr. 51 *)
+                 15.80     (* pente compensee *)
+
+CARFIXE          8110      (* abscisse _Bloc nr. 52 *)
+                 1000      (* PilotAuto_Adher_Res_Res*)
+
+PENTECOMP        8132      (* abscisse _Bloc nr. 53 *)
+                 20.00     (* pente compensee *)
+
+ARRETSUB         8251.5    (* abscisse pour cdv  22 _Bloc nr. 54 *)
+
+PENTECOMP        8252      (* abscisse _Bloc nr. 55 *)
+                 13.60     (* pente compensee *)
+
+EXTREMSIMPLE     8267      (* abscisse _Bloc nr. 56 *)
+                 1         (* increment de seg --> vers 845 - 13.3.1 *)
+                 0         (* rang premier variant anticipee *)
+                 0         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 13.3.1 --------------------- *)
+
+ENTETESEG        8267      (* abscisse _Bloc nr. 57 *)
+                 845       (* numero de segment *)
+                 12        (* numero de canal *)
+                 2         (* numero d'index *)
+                 2         (* rang du premier variant *)
+                 1000      (* caracteristiques fixes *)
+                 16        (* vitesse limite 80km/h *)
+                 0         (* pente reelle *)
+                 13.6      (* pente compensee *)
+
+STATION          8271.5    (* abscisse _Bloc nr. 58 *)
+                 135.5     (* longueur quai *)
+                 0100      (* quai a d *)
+                 36        (* numero station Rondizzon *)
+
+PENTECOMP        8282      (* abscisse _Bloc nr. 59 *)
+                 2.90      (* pente compensee *)
+
+BALISE           8320      (* abscisse _Bloc nr. 60 *)
+                 2         (* relocalisation : code 1 *)
+
+PENTECOMP        8352      (* abscisse _Bloc nr. 61 *)
+                 3.10      (* pente compensee *)
+
+ARRETFONC2       8374.5    (* abscisse  _Bloc nr. 62 *)
+                 102       (* longueur max train: 1er arret *)
+                 31.5      (* chainage abscisse --> 2eme arret *)
+
+ARRETSUB         8397      (* abscisse pour cdv 21  _Bloc nr. 63 *)
+
+PENTECOMP        8522      (* abscisse _Bloc nr. 64 *)
+                 14.70     (* pente compensee *)
+
+ARRETSUB         8536.5    (* abscisse pour cdv 20  _Bloc nr. 65 *)
+
+EXTREMSIMPLE     8552      (* abscisse _Bloc nr. 66 *)
+                 3         (* increment de seg --> vers 848 - 13.4.0 *)
+                 0         (* rang premier variant anticipee *)
+                 1         (* nombre de variants anticipees *)
+
+
+(* --------------------- SEGMENT 13.4.0 --------------------- *)
+
+ENTETESEG        8551.5    (* abscisse _Bloc nr. 67 *)
+                 848       (* numero de segment *)
+                 12        (* numero de canal *)
+                 2         (* numero d'index *)
+                 0         (* rang du premier variant *)
+                 1000      (* caracteristiques fixes *)
+                 16        (* vitesse limite 80km/h *)
+                 0         (* pente reelle *)
+                 14.7      (* pente compensee *)
+
+PENTECOMP        8582      (* abscisse _Bloc nr. 68 *)
+                 20.00     (* pente compensee *)
+
+BALISE           8615.5    (* abscisse _Bloc nr. 69 *)
+                 2         (* relocalisation : code 1 *)
+
+BALISE           8891      (* abscisse _Bloc nr. 70 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSUB         9007.5    (* abscisse pour cdv 23  _Bloc nr. 71 *)
+
+BALISE           9063      (* abscisse _Bloc nr. 72 *)
+                 2         (* relocalisation : code 1 *)
+
+ARRETSUB         9148      (* abscisse pour cdv 22  _Bloc nr. 73 *)
+
+STATION          9167.5    (* abscisse _Bloc nr. 74 *)
+                 135.5     (* longueur quai *)
+                 0100      (* quai a d *)
+                 35        (* numero station P. Higgin *)
+
+PENTECOMP        9192      (* abscisse _Bloc nr. 75 *)
+                 6.40      (* pente compensee *)
+
+BALISE           9216.5    (* abscisse _Bloc nr. 76 *)
+                 2         (* relocalisation : code 1 *)
+
+PENTECOMP        9232      (* abscisse _Bloc nr. 77 *)
+                 1.10      (* pente compensee *)
+
+ARRETSUB         9293      (* abscisse pour cdv 21B _Bloc nr. 78 *)
+
+ARRETFONC1       9302      (* abscisse  _Bloc nr. 79 *)
+
+ARRETSUB         9433      (* abscisse pour cdv 20  _Bloc nr. 80 *)
+
+EXTREMCHAINEE    9448      (* abscisse _Bloc nr. 81 *)
+                 788       (* prochain segment 12.5.0 *)
+                 0         (* numero de branche sur prochain segment *)
+                 0         (* rang premier variant anticipee *)
+                 1         (* nombre de variants anticipees *)
+
+FIN-INVARIANTS
+(* Fichier d'entree : rts_sect13_116.xls *)
+(* Fichier de sortie : inv13_116.txt *)
